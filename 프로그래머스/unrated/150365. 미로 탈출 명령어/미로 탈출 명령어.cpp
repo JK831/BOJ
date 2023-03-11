@@ -1,6 +1,5 @@
 #include <string>
 #include <vector>
-#include <queue>
 #include <stack>
 #include <tuple>
 #include <cstdlib>
@@ -12,12 +11,13 @@ using namespace std;
 // DFS를 사용할 때 알파벳 순 (d l r u)으로 탐색하도록 한다.
 // 다음에 이동할 위치, 이동 횟수 + 1, 현재까지의 string + 다음 위치로 이동할 때의 알파벳을 Queue에 push
 
+// 알파벳 순서대로 탐색을 하기 때문에 답을 찾았다면 그 답이 최적의 답이고 바로 return 하면 되므로 DFS로 탐색하는 것이 적절하다. BFS로 탐색 시 시간초과로 실패한다.
 
 int dx[4] = {-1, 0, 0, 1};
 int dy[4] = {0, 1, -1, 0};
 char dChar[4] = {'u', 'r', 'l', 'd'};
 
-int N, M, sx, sy, ex, ey;
+int ex, ey;
 
 int GetDistance(int curX, int curY, int destX, int destY)
 {
@@ -71,10 +71,10 @@ string solution(int n, int m, int x, int y, int r, int c, int k) {
         else
         {
             int nCount = count - 1;
-            // d, l, r, u 순으로 Queue에 push
+            // u, r, l, d 순으로 Stack에 push -> Stack에서 Pop을 할 시에는 d l r u 순이 된다.
             for (int i = 0; i < 4; i++)
             {
-                // Queue에 push할 원소들: 다음으로 이동할 x, y, 현재 남은 이동 횟수 -1, 현재 문자열 + 이동 방향에 해당하는 문자
+                // Stack에 push할 원소들: 다음으로 이동할 x, y, 현재 남은 이동 횟수 -1, 현재 문자열 + 이동 방향에 해당하는 문자
                 int nx = qx + dx[i];
                 int ny = qy + dy[i];
                 
