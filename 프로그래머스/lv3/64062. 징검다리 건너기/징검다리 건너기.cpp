@@ -16,7 +16,7 @@ int solution(vector<int> stones, int k) {
     multimap<int, int, greater<int>> m;
 	int size = stones.size();
 
-	// 길이가 k인 윈도 생성
+	// 길이가 k인 윈도우 생성
 	for (int i = 0; i < k; ++i)
 		m.insert({stones[i], i});
 
@@ -26,7 +26,7 @@ int solution(vector<int> stones, int k) {
 
 	// 각 윈도우 내 최댓값 추출
 	for (int i = 0; i < size - k; ++i)
-    {
+    	{
 		// 한 칸씩 이동
 		iter = m.find(stones[i]);
 		m.erase(iter);
