@@ -8,7 +8,7 @@
 
 ### 분류
 
-이분 탐색(binary_search), 포함 배제의 원리(inclusion_and_exclusion), 수학(math), 정수론(number_theory)
+이분 탐색, 포함 배제의 원리, 수학, 정수론
 
 ### 문제 설명
 
