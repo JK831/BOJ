@@ -16,7 +16,7 @@ int solution(vector<int> stones, int k) {
     multimap<int, int, greater<int>> m;
 	int size = stones.size();
 
-	// 길이가 k인 윈도dn 생성
+	// 길이가 k인 윈도 생성
 	for (int i = 0; i < k; ++i)
 		m.insert({stones[i], i});
 
