@@ -8,7 +8,7 @@
 
 ### 분류
 
-분할 정복(divide_and_conquer), 기하학(geometry), 스위핑(sweeping)
+분할 정복, 기하학, 스위핑
 
 ### 문제 설명
 
