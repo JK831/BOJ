@@ -19,19 +19,16 @@ int solution(int n) {
     vector<long long> DP(n + 1, 0);
     
     DP[0] = 1;
-    DP[2] = 3;
-    DP[4] = 11;
     
-    for (int i = 6; i < n + 1 ; i += 2)
+    long long MidSum = 0;
+    
+    for (int i = 2; i < n + 1 ; i += 2)
     {
-        DP[i] = (DP[i - 2] * 3) % INF;
-        for (int j = i - 4 ; j >= 0 ; j -= 2)
-        {
-            DP[i] += (DP[j] * 2) % INF;
-        }
+        DP[i] = ((DP[i - 2] * 3) + (MidSum * 2)) % INF;
+        MidSum += DP[i - 2];
     }
     
-    answer = DP[n] % INF;
+    answer = DP[n];
     
     return answer;
 }
