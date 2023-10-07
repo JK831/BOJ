@@ -17,58 +17,59 @@ using namespace std;
 vector<string> solution(vector<vector<int>> line) 
 {
     vector<string> answer;
-    vector<pair<long long, long long>> v;
-    double v1num1 = 0; double v1num2 = 0; double v1num3 = 0;
-    double v2num1 = 0; double v2num2 = 0; double v2num3 = 0;
+    vector<pair<long long, long long>> Intersections;
+    double A = 0; double B = 0; double E = 0;
+    double C = 0; double D = 0; double F = 0;
     double BFED = 0; double ECAF = 0; double ADBC = 0;
-    double x = 0; double y = 0;
+    double X = 0; double Y = 0;
     
-    for (int i = 0; i < line.size(); i++)
+    for (int i = 0; i < line.size(); ++i)
     {
-        v1num1 = line[i][0]; v1num2 = line[i][1]; v1num3 = line[i][2];
-        for (int j = i + 1; j < line.size(); j++)
+        A = line[i][0]; B = line[i][1]; E = line[i][2];
+        for (int j = i + 1; j < line.size(); ++j)
         {
-            v2num1 = line[j][0]; v2num2 = line[j][1]; v2num3 = line[j][2];
+            C = line[j][0]; D = line[j][1]; F = line[j][2];
 
-            BFED = v1num2 * v2num3 - v1num3 * v2num2;
-            ECAF = v1num3 * v2num1 - v1num1 * v2num3;
-            ADBC = v1num1 * v2num2 - v1num2 * v2num1;
+            BFED = B * F - E * D;
+            ECAF = E * C - A * F;
+            ADBC = A * D - B * C;
 
-            if(ADBC != 0)
+            if(ADBC == 0) continue;
+         
+            X = BFED / ADBC;
+            Y = ECAF / ADBC;
+            if(X - static_cast<long long>(X) == 0 && Y - static_cast<long long>(Y) == 0)
             {
-                x = BFED / ADBC;
-                y = ECAF / ADBC;
-                if(x - (long long)x == 0 && y - (long long)y == 0)
-                {
-                    v.emplace_back(pair<long long, long long>{x, y});
-                }
+                Intersections.push_back({X, Y});
             }
+         
         }
     }
 
-    pair<long long, long long> pr;
-    sort(v.begin(), v.end(), [](auto a, auto b)
+    pair<long long, long long> MaxYMinX;
+    
+    sort(Intersections.begin(), Intersections.end(), [](auto a, auto b)
         {
             return a.first < b.first;
         });
-    pr.first = v[0].first;
-    double size1 = abs(v[0].first - v[v.size() - 1].first) + 1;
-    sort(v.begin(), v.end(), [](auto a, auto b)
+        
+    MaxYMinX.first = Intersections[0].first;
+    double Width = abs(Intersections[0].first - Intersections[Intersections.size() - 1].first) + 1;
+    
+    sort(Intersections.begin(), Intersections.end(), [](auto a, auto b)
         {
             return a.second > b.second;
         });
+    double Height = abs(Intersections[0].second - Intersections[Intersections.size() - 1].second) + 1;
+    MaxYMinX.second = Intersections[0].second;
 
-    double size2 = abs(v[0].second - v[v.size() - 1].second) + 1;
+    string Initial = "";
+    Initial.append(Width, '.');
+    vector<string> result(Height, Initial);
 
-    pr.second = v[0].second;
-
-    string st1 = "";
-    st1.append(size1, '.');
-    vector<string> result(size2, st1);
-
-    for (int i = 0; i < v.size(); i++)
+    for (int i = 0; i < Intersections.size(); ++i)
     {
-        result[(long long)pr.second - v[i].second][(long long)v[i].first - pr.first] = '*';
+        result[MaxYMinX.second - Intersections[i].second][Intersections[i].first - MaxYMinX.first] = '*';
     }
 
     answer = result;
